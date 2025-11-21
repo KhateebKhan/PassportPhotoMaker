@@ -1,0 +1,37 @@
+﻿@model PhotoMaker.Models.PhotoResultViewModel
+
+<h2>Final Passport Photo</h2>
+<h3>Processed Output Preview</h3>
+
+<div class="text-center mt-4">
+
+    <!-- Show the combined sheet image -->
+    <div class="sheet-container">
+        <div class="sheet-box" style=" width: 600px; ">
+            <img src="@Model.FinalSheetImagePath" class="sheet-img" />
+        </div>
+    </div>
+
+
+
+    <br /><br />
+
+    <!-- Download button -->
+    <a href="@Model.FinalSheetImagePath" download class="btn btn-primary btn-lg">
+        Download Passport Sheet
+    </a>
+</div>
+<h3>Individual Processed Images (Optional)</h3>
+
+<div class="photo-grid">
+    @foreach (var img in Model.ProcessedImages)
+    {
+        <div class="photo-box">
+            <img src="@img"
+                 style="width:@(Model.WidthPx)px; height:@(Model.HeightPx)px; background:@Model.BackgroundColor;" />
+        </div>
+    }
+</div>
+
+<br />
+

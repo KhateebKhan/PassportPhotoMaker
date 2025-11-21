@@ -1,0 +1,104 @@
+﻿@model PhotoMaker.Models.PhotoResultViewModel
+
+@{
+    ViewBag.Title = "Preview Your Photo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="options-panel mt-5">
+
+    <h3>Passport Photo Options</h3>
+
+    @using (Html.BeginForm("Result", "Photo", FormMethod.Post))
+    {
+        @Html.Hidden("OriginalImageName", Model.OriginalImageName)
+        @Html.Hidden("SheetCount", Model.SheetCount)
+        @Html.Hidden("BackgroundColor", Model.BackgroundColor)
+
+        <div class="row mt-3">
+
+            <div class="col-md-3">
+                <label>Width (px)</label>
+                <input type="number" id="widthInput" name="WidthPx" class="form-control"
+                       value="354" required />
+            </div>
+
+            <div class="col-md-3">
+                <label>Height (px)</label>
+                <input type="number" id="heightInput" name="HeightPx" class="form-control"
+                       value="472" required />
+            </div>
+
+            <div class="col-md-3">
+                <label>Background</label>
+                <input type="text" id="bgInput" class="form-control"
+                       value="@Model.BackgroundColor" disabled />
+            </div>
+
+            <div class="col-md-3">
+                <label>Copies</label>
+                <input type="number" id="copiesInput" class="form-control"
+                       value="@Model.SheetCount" />
+            </div>
+
+        </div>
+
+        <button type="submit" class="btn btn-success mt-4">
+            Process Photo
+        </button>
+    }
+</div>
+
+<div class="preview-wrapper">
+
+    <h2 class="preview-title">Preview Your Photo</h2>
+
+    <div class="photo-grid" id="previewGrid">
+        @for (int i = 0; i < Model.SheetCount; i++)
+        {
+            <div class="photo-box">
+                <img src="@Model.OriginalImagePath" class="preview-photo" />
+            </div>
+        }
+    </div>
+
+</div>
+
+@section scripts {
+    <script>
+        const widthInput = document.getElementById("widthInput");
+        const heightInput = document.getElementById("heightInput");
+        const bgInput = document.getElementById("bgInput");
+        const copiesInput = document.getElementById("copiesInput");
+
+        const photoGrid = document.getElementById("previewGrid");
+
+        function updatePreview() {
+            let width = parseInt(widthInput.value);
+            let height = parseInt(heightInput.value);
+            let bgColor = bgInput.value.toLowerCase();
+            let copies = parseInt(copiesInput.value);
+
+            let html = "";
+
+            for (let i = 0; i < copies; i++) {
+                html += `
+                    <div class="photo-box">
+                        <img src="@Model.OriginalImagePath"
+                             class="preview-photo"
+                             style="width:${width}px; height:${height}px; background:${bgColor};" />
+                    </div>`;
+            }
+
+            photoGrid.innerHTML = html;
+        }
+
+        widthInput.addEventListener("input", updatePreview);
+        heightInput.addEventListener("input", updatePreview);
+        bgInput.addEventListener("input", updatePreview);
+        copiesInput.addEventListener("input", updatePreview);
+
+        // First render
+        updatePreview();
+    </script>
+}

@@ -1,0 +1,61 @@
+﻿@{
+    ViewBag.Title = "Upload Passport Photo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="mt-4">Upload Passport Photo</h2>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger mt-3">@TempData["Error"]</div>
+}
+
+@using (Html.BeginForm("Upload", "Photo", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="card shadow-sm p-4 mt-4" style="max-width: 500px;">
+
+        <!-- File Upload -->
+        <div class="mb-3">
+            <label class="form-label"><strong>Select Image (JPG or PNG)</strong></label>
+            <input type="file" name="photo" class="form-control" accept="image/*" required />
+        </div>
+        <!-- File Upload To Stander Size -->
+        <div class="form-group">
+            <label>Passport Size</label>
+            <select name="SizeType" class="form-control">
+                <option value="EU">EU – 35×45 mm (413×531 px)</option>
+                <option value="US">US – 2×2 inch (600×600 px)</option>
+                <option value="Custom">Custom (Use Width/Height)</option>
+            </select>
+        </div>
+
+        <!-- Background Color -->
+        <div class="mb-3">
+            <label class="form-label"><strong>Background Color</strong></label>
+            <select name="BackgroundColor" class="form-control">
+                <option value="white" selected>White (Default)</option>
+                <option value="blue">Blue</option>
+                <option value="red">Red</option>
+                <option value="gray">Gray</option>
+                <option value="transparent">Transparent</option>
+            </select>
+        </div>
+
+        <!-- Sheet Count for PDF -->
+        <div class="mb-3">
+            <label class="form-label"><strong>How Many Photos on A4 Sheet?</strong></label>
+            <select name="SheetCount" class="form-control">
+                <option value="2">2 Photos</option>
+                <option value="4">4 Photos</option>
+                <option value="6" selected>6 Photos</option>
+                <option value="8">8 Photos</option>
+            </select>
+        </div>
+
+
+
+        <button type="submit" class="btn btn-primary mt-3 w-100">
+            Upload & Continue
+        </button>
+    </div>
+}

@@ -1,0 +1,22 @@
+# Ignore Visual Studio cache
+.vs/
+*.user
+*.suo
+
+# Ignore build output
+bin/
+obj/
+Debug/
+Release/
+
+# Ignore NuGet packages
+packages/
+*.nupkg
+
+# Ignore logs and temp
+*.log
+*.tmp
+*.cache
+
+# Ignore publish output
+wwwroot/
