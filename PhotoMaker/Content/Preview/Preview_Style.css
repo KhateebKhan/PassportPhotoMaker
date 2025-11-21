@@ -1,0 +1,33 @@
+﻿/* Force container to center */
+.preview-wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Force grid layout */
+.photo-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) !important;
+    gap: 20px !important;
+    justify-items: center !important;
+    margin-top: 30px;
+}
+
+/* Photo box wrapper */
+.photo-box {
+    width: 200px;
+    height: auto;
+    border: 2px solid #ccc;
+    padding: 10px;
+    background: white;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+    /* Image inside box */
+    .photo-box img {
+        width: 180px !important;
+        height: 230px !important;
+        object-fit: cover;
+        border: 1px solid #777;
+    }

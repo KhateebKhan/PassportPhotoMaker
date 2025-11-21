@@ -1,4 +1,6 @@
-﻿using Microsoft.ML.OnnxRuntime;
+﻿
+
+using Microsoft.ML.OnnxRuntime;
 using Microsoft.ML.OnnxRuntime.Tensors;
 using System;
 using System.Collections.Generic;
@@ -14,7 +16,7 @@ namespace PhotoMaker.Helpers
         private static InferenceSession _session;
 
         /// <summary>
-        /// Loads the ONNX model (u2net.onnx)
+        /// Load U2NET-Human-Seg ONNX model
         /// </summary>
         private static void EnsureModelLoaded()
         {
@@ -22,73 +24,94 @@ namespace PhotoMaker.Helpers
                 return;
 
             string modelPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
-                @"App_Data\Models\u2net.onnx");
+                @"App_Data\Models\u2net_human_seg.onnx");
 
             if (!File.Exists(modelPath))
                 throw new FileNotFoundException("Could not find ONNX model at: " + modelPath);
 
             _session = new InferenceSession(modelPath);
+
+            // Debug (run once)
+            foreach (var o in _session.OutputMetadata.Keys)
+                System.Diagnostics.Debug.WriteLine("HUMAN SEG OUTPUT → " + o);
+
+            foreach (var i in _session.InputMetadata.Keys)
+                System.Diagnostics.Debug.WriteLine("HUMAN SEG INPUT → " + i);
         }
 
         /// <summary>
-        /// Removes background using U2Net ONNX – returns transparent PNG-like bitmap.
+        /// Background removal using u2net_human_seg
         /// </summary>
         public static Bitmap RemoveBackground(Bitmap input)
         {
             EnsureModelLoaded();
 
-            // Resize to 320x320 — U2Net requirement
+            // Resize to model input (320x320)
             Bitmap resized = new Bitmap(input, new Size(320, 320));
 
-            // Convert to tensor
             float[] inputTensor = new float[3 * 320 * 320];
-            int index = 0;
+            int idxR = 0, idxG = 320 * 320, idxB = 2 * 320 * 320;
 
             for (int y = 0; y < 320; y++)
             {
                 for (int x = 0; x < 320; x++)
                 {
-                    Color pixel = resized.GetPixel(x, y);
-
-                    inputTensor[index++] = pixel.R / 255f;
-                    inputTensor[index++] = pixel.G / 255f;
-                    inputTensor[index++] = pixel.B / 255f;
+                    Color p = resized.GetPixel(x, y);
+                    inputTensor[idxR++] = p.R / 255f;
+                    inputTensor[idxG++] = p.G / 255f;
+                    inputTensor[idxB++] = p.B / 255f;
                 }
             }
 
-            var shape = new int[] { 1, 3, 320, 320 };
-            var tensor = new DenseTensor<float>(inputTensor, shape);
+            var tensor = new DenseTensor<float>(inputTensor, new[] { 1, 3, 320, 320 });
 
-            var inputs = new List<NamedOnnxValue>();
-            inputs.Add(NamedOnnxValue.CreateFromTensor("input", tensor));
+            var inputs = new List<NamedOnnxValue>
+            {
+                NamedOnnxValue.CreateFromTensor(_session.InputMetadata.Keys.First(), tensor)
+            };
 
-            IDisposableReadOnlyCollection<DisposableNamedOnnxValue> results = _session.Run(inputs);
+            // Run inference once
+            var results = _session.Run(inputs);
 
-            // Get mask
-            var maskTensor = results.First().AsEnumerable<float>();
+            // Human seg always returns 1 tensor (1×1×320×320)
+            var maskTensor = results.First().AsEnumerable<float>().ToArray();
 
+            Bitmap maskBmp = new Bitmap(320, 320, PixelFormat.Format32bppArgb);
+
+            int index = 0;
+            for (int y = 0; y < 320; y++)
+            {
+                for (int x = 0; x < 320; x++)
+                {
+                    float m = maskTensor[index++];   // Already 0–1
+                    int a = (int)(m * 255);
+
+                    maskBmp.SetPixel(x, y, Color.FromArgb(a, 255, 255, 255));
+                }
+            }
+
+            // Resize mask to original dimensions
+            Bitmap maskResized = new Bitmap(maskBmp, input.Size);
+
+            // Final transparent output
             Bitmap output = new Bitmap(input.Width, input.Height, PixelFormat.Format32bppArgb);
 
-            // Apply mask
-            int i = 0;
-            foreach (float m in maskTensor)
+            for (int y = 0; y < input.Height; y++)
             {
-                int xx = (i % 320) * input.Width / 320;
-                int yy = (i / 320) * input.Height / 320;
+                for (int x = 0; x < input.Width; x++)
+                {
+                    Color orig = input.GetPixel(x, y);
+                    Color m = maskResized.GetPixel(x, y);
 
-                Color orig = input.GetPixel(xx, yy);
-                int alpha = (int)(m * 255);
-
-                output.SetPixel(xx, yy, Color.FromArgb(alpha, orig.R, orig.G, orig.B));
-
-                i++;
+                    output.SetPixel(x, y, Color.FromArgb(m.A, orig.R, orig.G, orig.B));
+                }
             }
 
             return output;
         }
 
         /// <summary>
-        /// Applies a solid background (white/blue/etc.) to a transparent image.
+        /// Optional solid background (blue, white etc.)
         /// </summary>
         public static Bitmap ApplySolidBackground(Bitmap transparentImage, Color bgColor)
         {
@@ -96,11 +119,9 @@ namespace PhotoMaker.Helpers
 
             using (Graphics g = Graphics.FromImage(output))
             {
-                // Fill background
                 g.Clear(bgColor);
-
-                // Draw image on top
-                g.DrawImage(transparentImage, 0, 0, transparentImage.Width, transparentImage.Height);
+                g.DrawImage(transparentImage, 0, 0,
+                    transparentImage.Width, transparentImage.Height);
             }
 
             return output;

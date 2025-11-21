@@ -1,125 +1,126 @@
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\obj\Debug\PhotoMaker.csproj.AssemblyReference.cache
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\obj\Debug\PhotoMaker.csproj.CoreCompileInputs.cache
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\dll\x86\OpenCvSharpExtern.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\dll\x86\opencv_videoio_ffmpeg455.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\dll\x64\OpenCvSharpExtern.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\dll\x64\opencv_videoio_ffmpeg455_64.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\App_Data\Models\u2net.onnx
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\PhotoMaker.dll.config
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\PhotoMaker.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\PhotoMaker.pdb
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\roslyn\csc.exe
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\roslyn\csc.exe.config
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\roslyn\csc.rsp
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\roslyn\csi.exe
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\roslyn\csi.exe.config
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\roslyn\csi.rsp
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\roslyn\Microsoft.CodeAnalysis.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\roslyn\Microsoft.CSharp.Core.targets
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\roslyn\Microsoft.Managed.Core.targets
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\roslyn\Microsoft.VisualBasic.Core.targets
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\roslyn\Microsoft.Win32.Primitives.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\roslyn\System.AppContext.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\roslyn\System.Collections.Immutable.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\roslyn\System.Console.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\roslyn\System.Diagnostics.DiagnosticSource.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\roslyn\System.Diagnostics.StackTrace.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\roslyn\System.Globalization.Calendars.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\roslyn\System.IO.Compression.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\roslyn\System.IO.Compression.ZipFile.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\roslyn\System.IO.FileSystem.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\roslyn\System.IO.FileSystem.Primitives.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\roslyn\System.Net.Http.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\roslyn\System.Net.Sockets.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\roslyn\System.Reflection.Metadata.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\roslyn\System.Runtime.InteropServices.RuntimeInformation.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\roslyn\System.Security.Cryptography.Algorithms.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\roslyn\System.Security.Cryptography.Encoding.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\roslyn\System.Security.Cryptography.Primitives.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\roslyn\System.Text.Encoding.CodePages.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\roslyn\System.Threading.Tasks.Extensions.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\roslyn\System.ValueTuple.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\roslyn\System.Xml.ReaderWriter.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\roslyn\System.Xml.XmlDocument.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\roslyn\System.Xml.XPath.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\roslyn\System.Xml.XPath.XDocument.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\roslyn\vbc.exe
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\roslyn\vbc.exe.config
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\roslyn\vbc.rsp
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\roslyn\VBCSCompiler.exe
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\roslyn\VBCSCompiler.exe.config
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\Antlr3.Runtime.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\EntityFramework.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\EntityFramework.SqlServer.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\Microsoft.AspNet.Identity.Core.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\Microsoft.AspNet.Identity.EntityFramework.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\Microsoft.AspNet.Identity.Owin.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\Microsoft.ML.OnnxRuntime.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\Microsoft.Owin.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\Microsoft.Owin.Host.SystemWeb.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\Microsoft.Owin.Security.Cookies.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\Microsoft.Owin.Security.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\Microsoft.Owin.Security.Facebook.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\Microsoft.Owin.Security.Google.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\Microsoft.Owin.Security.OAuth.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\Microsoft.Owin.Security.Twitter.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\Microsoft.Web.Infrastructure.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\Newtonsoft.Json.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\OpenCvSharp.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\Owin.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\System.Buffers.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\System.Memory.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\System.Numerics.Vectors.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\System.Runtime.CompilerServices.Unsafe.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\System.Web.Helpers.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\System.Web.Mvc.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\System.Web.Optimization.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\System.Web.Razor.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\System.Web.WebPages.Deployment.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\System.Web.WebPages.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\System.Web.WebPages.Razor.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\WebGrease.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\Microsoft.ML.OnnxRuntime.pdb
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\OpenCvSharp.xml
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\System.Buffers.xml
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\System.Memory.xml
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\System.Numerics.Vectors.xml
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\System.Runtime.CompilerServices.Unsafe.xml
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\System.Web.Helpers.xml
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\System.Web.Mvc.xml
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\System.Web.Optimization.xml
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\System.Web.Razor.xml
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\System.Web.WebPages.xml
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\System.Web.WebPages.Deployment.xml
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\System.Web.WebPages.Razor.xml
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\Newtonsoft.Json.xml
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\Antlr3.Runtime.pdb
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\EntityFramework.xml
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\EntityFramework.SqlServer.xml
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\Microsoft.AspNet.Identity.Core.xml
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\Microsoft.AspNet.Identity.Owin.xml
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\Microsoft.AspNet.Identity.EntityFramework.xml
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\Microsoft.Owin.xml
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\Microsoft.Owin.Host.SystemWeb.xml
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\Microsoft.Owin.Security.xml
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\Microsoft.Owin.Security.Facebook.xml
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\Microsoft.Owin.Security.Cookies.xml
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\Microsoft.Owin.Security.Google.xml
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\Microsoft.Owin.Security.Twitter.xml
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\Microsoft.Owin.Security.OAuth.xml
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\obj\Debug\PhotoMaker.csproj.Up2Date
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\obj\Debug\PhotoMaker.dll
-C:\Users\GameBrick Studio\source\repos\PhotoMaker\PhotoMaker\obj\Debug\PhotoMaker.pdb
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\dll\x86\OpenCvSharpExtern.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\dll\x86\opencv_videoio_ffmpeg455.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\dll\x64\OpenCvSharpExtern.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\dll\x64\opencv_videoio_ffmpeg455_64.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\App_Data\Models\u2net.onnx
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\onnxruntime_providers_shared.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\PhotoMaker.dll.config
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\PhotoMaker.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\PhotoMaker.pdb
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\roslyn\csc.exe
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\roslyn\csc.exe.config
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\roslyn\csc.rsp
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\roslyn\csi.exe
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\roslyn\csi.exe.config
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\roslyn\csi.rsp
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\roslyn\Microsoft.CodeAnalysis.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\roslyn\Microsoft.CSharp.Core.targets
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\roslyn\Microsoft.Managed.Core.targets
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\roslyn\Microsoft.VisualBasic.Core.targets
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\roslyn\Microsoft.Win32.Primitives.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\roslyn\System.AppContext.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\roslyn\System.Collections.Immutable.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\roslyn\System.Console.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\roslyn\System.Diagnostics.DiagnosticSource.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\roslyn\System.Diagnostics.StackTrace.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\roslyn\System.Globalization.Calendars.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\roslyn\System.IO.Compression.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\roslyn\System.IO.Compression.ZipFile.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\roslyn\System.IO.FileSystem.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\roslyn\System.IO.FileSystem.Primitives.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\roslyn\System.Net.Http.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\roslyn\System.Net.Sockets.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\roslyn\System.Reflection.Metadata.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\roslyn\System.Runtime.InteropServices.RuntimeInformation.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\roslyn\System.Security.Cryptography.Encoding.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\roslyn\System.Security.Cryptography.Primitives.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\roslyn\System.Text.Encoding.CodePages.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\roslyn\System.Threading.Tasks.Extensions.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\roslyn\System.ValueTuple.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\roslyn\System.Xml.ReaderWriter.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\roslyn\System.Xml.XmlDocument.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\roslyn\System.Xml.XPath.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\roslyn\System.Xml.XPath.XDocument.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\roslyn\vbc.exe
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\roslyn\vbc.exe.config
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\roslyn\vbc.rsp
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\roslyn\VBCSCompiler.exe
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\roslyn\VBCSCompiler.exe.config
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\Antlr3.Runtime.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\EntityFramework.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\EntityFramework.SqlServer.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\Microsoft.AspNet.Identity.Core.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\Microsoft.AspNet.Identity.Owin.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\Microsoft.ML.OnnxRuntime.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\Microsoft.Owin.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\Microsoft.Owin.Host.SystemWeb.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\Microsoft.Owin.Security.Cookies.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\Microsoft.Owin.Security.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\Microsoft.Owin.Security.Facebook.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\Microsoft.Owin.Security.Google.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\Microsoft.Owin.Security.OAuth.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\Microsoft.Owin.Security.Twitter.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\Microsoft.Web.Infrastructure.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\Newtonsoft.Json.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\OpenCvSharp.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\Owin.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\System.Buffers.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\System.Memory.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\System.Numerics.Vectors.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\System.Runtime.CompilerServices.Unsafe.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\System.Web.Helpers.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\System.Web.Mvc.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\System.Web.Optimization.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\System.Web.Razor.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\System.Web.WebPages.Deployment.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\System.Web.WebPages.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\System.Web.WebPages.Razor.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\WebGrease.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\Antlr3.Runtime.pdb
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\EntityFramework.xml
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\EntityFramework.SqlServer.xml
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\Microsoft.AspNet.Identity.Core.xml
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\Microsoft.AspNet.Identity.Owin.xml
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\Microsoft.ML.OnnxRuntime.pdb
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\Microsoft.Owin.xml
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\Microsoft.Owin.Host.SystemWeb.xml
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\Microsoft.Owin.Security.xml
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\Microsoft.Owin.Security.Cookies.xml
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\Microsoft.Owin.Security.Facebook.xml
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\Microsoft.Owin.Security.Google.xml
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\Microsoft.Owin.Security.OAuth.xml
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\Microsoft.Owin.Security.Twitter.xml
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\Newtonsoft.Json.xml
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\OpenCvSharp.xml
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\System.Buffers.xml
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\System.Memory.xml
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\System.Numerics.Vectors.xml
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\System.Runtime.CompilerServices.Unsafe.xml
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\System.Web.Helpers.xml
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\System.Web.Mvc.xml
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\System.Web.Optimization.xml
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\System.Web.Razor.xml
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\System.Web.WebPages.xml
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\System.Web.WebPages.Deployment.xml
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\bin\System.Web.WebPages.Razor.xml
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\obj\Debug\PhotoMaker.csproj.AssemblyReference.cache
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\obj\Debug\PhotoMaker.csproj.CoreCompileInputs.cache
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\obj\Debug\PhotoMaker.csproj.Up2Date
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\obj\Debug\PhotoMaker.dll
+E:\MyGithub\PassportPhotoMaker\PhotoMaker\obj\Debug\PhotoMaker.pdb

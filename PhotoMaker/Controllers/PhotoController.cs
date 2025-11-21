@@ -158,14 +158,17 @@ namespace YourProject.Controllers
             // -----------------------------------------------------
             // 7) Build sheet
             // -----------------------------------------------------
-            string sheetFileName = ImageSheetBuilder.BuildSheet(
-                resizedImages.ConvertAll(p => Server.MapPath(p)),
-                passportWidth,
-                passportHeight,
-                OutputFolder
-            );
+            // Build proper A4 sheet
+            Bitmap a4Sheet = PassportSheetBuilder.BuildA4Sheet(finalPassportImage, SheetStyle.CleanPassport);
+
+            // Save output
+            string sheetFileName = "sheet_" + Guid.NewGuid() + ".jpg";
+            string sheetPath = Path.Combine(OutputFolder, sheetFileName);
+            a4Sheet.Save(sheetPath, ImageFormat.Jpeg);
 
             string sheetUrl = "/Content/Output/" + sheetFileName;
+
+
 
             // -----------------------------------------------------
             // 8) View model

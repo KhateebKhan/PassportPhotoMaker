@@ -1,103 +1,61 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
+using System.Drawing.Imaging;
 
 namespace PhotoMaker.Helpers
 {
-    public static class ImageSheetBuilder
+    public enum SheetStyle
     {
-        public static string BuildSheet(
-            List<string> imagePaths,
-            int imgW,
-            int imgH,
-            string outputFolder)
+        StyledGrid,
+        CleanPassport,
+        PassportWithBorders
+    }
+
+    public static class PassportSheetBuilder
+    {
+        public static Bitmap BuildA4Sheet(Bitmap passportPhoto, SheetStyle style)
         {
-            if (imagePaths == null || imagePaths.Count == 0)
-                throw new Exception("No images passed to sheet builder.");
+            int a4W = 2480; // A4 @ 300 DPI
+            int a4H = 3508;
 
-            int spacing = 20;       // CSS grid gap
-            int padding = 10;       // CSS .photo-box padding
-            int borderOuter = 2;    // CSS .photo-box border
-            int borderInner = 1;    // CSS img border
-            int maxCols = 4;
-
-            int frameW = imgW + padding * 2 + borderInner * 2 + borderOuter * 2;
-            int frameH = imgH + padding * 2 + borderInner * 2 + borderOuter * 2;
-
-            int total = imagePaths.Count;
-            int cols = Math.Min(maxCols, total);
-            int rows = (int)Math.Ceiling(total / (double)cols);
-
-            int sheetWidth =
-                cols * frameW +
-                (cols + 1) * spacing;
-
-            int sheetHeight =
-                rows * frameH +
-                (rows + 1) * spacing;
-
-            Bitmap sheet = new Bitmap(sheetWidth, sheetHeight);
+            Bitmap sheet = new Bitmap(a4W, a4H);
             Graphics g = Graphics.FromImage(sheet);
             g.Clear(Color.White);
 
-            int index = 0;
+            int pw = passportPhoto.Width;  // 413 px
+            int ph = passportPhoto.Height; // 531 px
 
-            for (int r = 0; r < rows; r++)
+            int margin = 80;
+            int spacing = 80;
+
+            int startX = margin;
+            int startY = margin;
+
+            for (int r = 0; r < 4; r++)
             {
-                int remaining = total - (r * cols);
-                int thisRow = Math.Min(cols, remaining);
-
-                // Center last row
-                int rowWidth = thisRow * frameW + (thisRow + 1) * spacing;
-                int startX = (sheetWidth - rowWidth) / 2 + spacing;
-
-                for (int c = 0; c < thisRow; c++)
+                for (int c = 0; c < 2; c++)
                 {
-                    using (Image img = Image.FromFile(imagePaths[index]))
+                    int x = startX + c * (pw + spacing);
+                    int y = startY + r * (ph + spacing);
+
+                    if (style == SheetStyle.StyledGrid)
                     {
-                        int x = startX + c * (frameW + spacing);
-                        int y = spacing + r * (frameH + spacing);
-
-                        // Outer border (2px)
-                        using (SolidBrush brush = new SolidBrush(Color.LightGray))
-                            g.FillRectangle(brush, x, y, frameW, frameH);
-
-                        // White background like .photo-box
-                        g.FillRectangle(Brushes.White,
-                            x + borderOuter,
-                            y + borderOuter,
-                            frameW - borderOuter * 2,
-                            frameH - borderOuter * 2);
-
-                        // Inner image border (1px)
-                        g.FillRectangle(Brushes.Gray,
-                            x + borderOuter + padding - borderInner,
-                            y + borderOuter + padding - borderInner,
-                            imgW + borderInner * 2,
-                            imgH + borderInner * 2);
-
-                        // Actual image
-                        g.DrawImage(img,
-                            x + borderOuter + padding,
-                            y + borderOuter + padding,
-                            imgW,
-                            imgH);
+                        g.FillRectangle(Brushes.LightGray, x - 20, y - 20, pw + 40, ph + 40);
+                        g.FillRectangle(Brushes.White, x - 10, y - 10, pw + 20, ph + 20);
+                        g.DrawRectangle(Pens.Gray, x - 1, y - 1, pw + 2, ph + 2);
                     }
 
-                    index++;
+                    if (style == SheetStyle.PassportWithBorders)
+                    {
+                        g.DrawRectangle(new Pen(Color.Black, 3), x - 5, y - 5, pw + 10, ph + 10);
+                    }
+
+                    g.DrawImage(passportPhoto, x, y, pw, ph);
                 }
             }
 
-            string fileName = "sheet_" + Guid.NewGuid() + ".jpg";
-            string savePath = Path.Combine(outputFolder, fileName);
-
-            sheet.Save(savePath);
             g.Dispose();
-            sheet.Dispose();
-
-            return fileName;
+            return sheet;
         }
     }
 }
-  
