@@ -10,7 +10,6 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-
 namespace YourProject.Controllers
 {
     public class PhotoController : Controller
@@ -26,17 +25,22 @@ namespace YourProject.Controllers
             }
         }
 
-        // ================================================
-        // 1️⃣ STEP 1 – Upload
-        // ================================================
+
+        // ============================================
+        // STEP 1 – UPLOAD
+        // ============================================
         [HttpGet]
         public ActionResult Upload()
         {
             return View();
         }
 
+
         [HttpPost]
-        public ActionResult Upload(HttpPostedFileBase photo, string BackgroundColor, int SheetCount)
+        public ActionResult Upload(
+    HttpPostedFileBase photo,
+    string BackgroundColor = "white",
+    int SheetCount = 6)
         {
             if (photo == null || photo.ContentLength == 0)
             {
@@ -55,7 +59,6 @@ namespace YourProject.Controllers
 
             string fileName = "original_" + Guid.NewGuid() + ext;
             string savePath = Path.Combine(OutputFolder, fileName);
-
             photo.SaveAs(savePath);
 
             return RedirectToAction("Preview", new
@@ -67,13 +70,13 @@ namespace YourProject.Controllers
         }
 
 
-        // ================================================
-        // 2️⃣ STEP 2 – Preview + Options
-        // ================================================
+        // ============================================
+        // STEP 2 – PREVIEW PAGE
+        // ============================================
         [HttpGet]
         public ActionResult Preview(string img, string bg, int sheets = 1)
         {
-            if (String.IsNullOrEmpty(img))
+            if (string.IsNullOrEmpty(img))
                 return RedirectToAction("Upload");
 
             var model = new PhotoResultViewModel
@@ -81,26 +84,36 @@ namespace YourProject.Controllers
                 OriginalImageName = img,
                 OriginalImagePath = "/Content/Output/" + img,
                 BackgroundColor = bg,
-                SheetCount = sheets
+                SheetCount = sheets,
             };
 
             return View(model);
         }
 
 
-        // ================================================
-        // 3️⃣ STEP 3 – Result → Background Removal → Resize
-        // ================================================
+
+
+        // ============================================
+        // STEP 3 – FINAL PROCESSING (POST)
+        // ============================================
         [HttpPost]
         public ActionResult Result(PassportOptions options)
         {
-            if (options == null) return RedirectToAction("Upload");
+            if (options == null)
+                return RedirectToAction("Upload");
 
-            // 1) Load original file
+            // ---------------------------------------------
+            // 1) Load original uploaded file
+            // ---------------------------------------------
             string inputPath = Path.Combine(OutputFolder, options.OriginalImageName);
+            if (!System.IO.File.Exists(inputPath))
+                return RedirectToAction("Upload");
+
             Bitmap original = new Bitmap(inputPath);
 
-            // 2) Passport dimensions
+            // ---------------------------------------------
+            // 2) Determine passport size
+            // ---------------------------------------------
             int passportWidth = options.WidthPx;
             int passportHeight = options.HeightPx;
 
@@ -115,78 +128,81 @@ namespace YourProject.Controllers
                 passportHeight = 600;
             }
 
-            // 3) CROP face correctly
+            // ---------------------------------------------
+            // 3) Face cropper
+            // ---------------------------------------------
             Bitmap croppedFace = FaceCropper.CropToPassport(original, passportWidth, passportHeight);
 
-            // -----------------------------------------------------
-            // ⭐⭐ 4) AI BACKGROUND REMOVAL (IMPORTANT PART) ⭐⭐
-            // -----------------------------------------------------
-            Bitmap noBackground = AiBackgroundRemover.RemoveBackground(croppedFace);
+            // ---------------------------------------------
+            // 4) AI Background removal
+            // ---------------------------------------------
+            Bitmap noBg = AiBackgroundRemover.RemoveBackground(croppedFace);
 
-            // apply clean background (white / blue / any color)
+            // Apply background color
             Color bgColor = Color.White;
-            if (!String.IsNullOrEmpty(options.BackgroundColor))
+            if (!string.IsNullOrEmpty(options.BackgroundColor))
                 bgColor = ColorTranslator.FromHtml(options.BackgroundColor);
 
-            Bitmap finalPassportImage = AiBackgroundRemover.ApplySolidBackground(noBackground, bgColor);
+            Bitmap finalPassportImage = AiBackgroundRemover.ApplySolidBackground(noBg, bgColor);
 
-            // -----------------------------------------------------
-            // 5) Save the new final cropped+cleaned passport image
-            // -----------------------------------------------------
-            string croppedFile = "passport_" + Guid.NewGuid() + ".jpg";
-            string croppedPath = Path.Combine(OutputFolder, croppedFile);
-            finalPassportImage.Save(croppedPath, ImageFormat.Jpeg);
+            // Save final cleaned image temporarily
+            string passportName = "passport_" + Guid.NewGuid() + ".jpg";
+            string passportPath = Path.Combine(OutputFolder, passportName);
+            finalPassportImage.Save(passportPath, ImageFormat.Jpeg);
 
-            // use this as input
-            inputPath = croppedPath;
 
-            // -----------------------------------------------------
-            // 6) Produce copies (do NOT resize)
-            // -----------------------------------------------------
-            List<string> resizedImages = new List<string>();
-
+            // ---------------------------------------------
+            // 5) Generate multiple copies (for preview)
+            // ---------------------------------------------
+            List<string> processedImages = new List<string>();
             for (int i = 0; i < options.SheetCount; i++)
             {
                 string fileName = $"processed_{Guid.NewGuid()}.jpg";
                 string savePath = Path.Combine(OutputFolder, fileName);
 
-                System.IO.File.Copy(inputPath, savePath);
+                System.IO.File.Copy(passportPath, savePath);
 
-                resizedImages.Add("/Content/Output/" + fileName);
+                processedImages.Add("/Content/Output/" + fileName);
             }
 
-            // -----------------------------------------------------
-            // 7) Build sheet
-            // -----------------------------------------------------
-            // Build proper A4 sheet
-            Bitmap a4Sheet = PassportSheetBuilder.BuildA4Sheet(finalPassportImage, SheetStyle.CleanPassport);
 
-            // Save output
-            string sheetFileName = "sheet_" + Guid.NewGuid() + ".jpg";
-            string sheetPath = Path.Combine(OutputFolder, sheetFileName);
-            a4Sheet.Save(sheetPath, ImageFormat.Jpeg);
+            // ---------------------------------------------
+            // 6) Build FINAL SHEET in selected PAPER SIZE
+            // ---------------------------------------------
+            int sheetW = options.PaperWidth > 0 ? options.PaperWidth : 2480; // A4 default
+            int sheetH = options.PaperHeight > 0 ? options.PaperHeight : 3508;
 
-            string sheetUrl = "/Content/Output/" + sheetFileName;
+            Bitmap finalSheet = PassportSheetBuilder.BuildCustomSheet(
+                finalPassportImage,
+                options.SheetCount,
+                sheetW,
+                sheetH
+            );
+
+            string sheetFile = "sheet_" + Guid.NewGuid() + ".jpg";
+            string sheetPath = Path.Combine(OutputFolder, sheetFile);
+            finalSheet.Save(sheetPath, ImageFormat.Jpeg);
 
 
-
-            // -----------------------------------------------------
-            // 8) View model
-            // -----------------------------------------------------
+            // ---------------------------------------------
+            // 7) ViewModel
+            // ---------------------------------------------
             var vm = new PhotoResultViewModel
             {
                 OriginalImagePath = "/Content/Output/" + options.OriginalImageName,
-                ProcessedImages = resizedImages,
+                ProcessedImages = processedImages,
                 SheetCount = options.SheetCount,
                 WidthPx = passportWidth,
                 HeightPx = passportHeight,
                 BackgroundColor = options.BackgroundColor,
-                FinalSheetImagePath = sheetUrl
+                FinalSheetImagePath = "/Content/Output/" + sheetFile,
+
+                // NEW
+                PaperWidthPx = sheetW,
+                PaperHeightPx = sheetH
             };
 
             return View(vm);
         }
-
-
     }
 }

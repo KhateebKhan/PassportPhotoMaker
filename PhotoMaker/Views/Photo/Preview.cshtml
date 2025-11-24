@@ -1,104 +1,286 @@
 ﻿@model PhotoMaker.Models.PhotoResultViewModel
 
 @{
-    ViewBag.Title = "Preview Your Photo";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Preview";
+    Layout = "~/Views/Shared/_PreviewLayout.cshtml";
 }
 
-<div class="options-panel mt-5">
+@using (Html.BeginForm("Result", "Photo", FormMethod.Post, new { id = "previewForm" }))
+{
+    @Html.Hidden("OriginalImageName", Model.OriginalImageName)
+    @Html.Hidden("BackgroundColor", Model.BackgroundColor)
+    @Html.Hidden("SheetCount", Model.SheetCount)
 
-    <h3>Passport Photo Options</h3>
+    @Html.Hidden("WidthPx", Model.WidthPx)
+    @Html.Hidden("HeightPx", Model.HeightPx)
 
-    @using (Html.BeginForm("Result", "Photo", FormMethod.Post))
-    {
-        @Html.Hidden("OriginalImageName", Model.OriginalImageName)
-        @Html.Hidden("SheetCount", Model.SheetCount)
-        @Html.Hidden("BackgroundColor", Model.BackgroundColor)
+    @Html.Hidden("PaperWidth")
+    @Html.Hidden("PaperHeight")
+    @Html.Hidden("SelectedPaperSize")
 
-        <div class="row mt-3">
+    <div class="modal-wrapper">
 
-            <div class="col-md-3">
-                <label>Width (px)</label>
-                <input type="number" id="widthInput" name="WidthPx" class="form-control"
-                       value="354" required />
+        <!-- TOP BAR -->
+        <div class="topbar">
+            <button type="button" id="doneBtn" class="done-btn">Done</button>
+            <span class="close-btn">✕</span>
+        </div>
+
+        <div class="editor">
+
+            <!-- LEFT SIDE -->
+            <div class="left-panel">
+
+                <label class="label-main">Paper Size</label>
+
+                <select class="dropdown" name="SelectedPaperSize" id="paperSize">
+
+                    <option value="single">Individual / Single Photo</option>
+
+                    <option value="3R">3.5 × 5 inch (3R)</option>
+                    <option value="4R">6 × 4 inch (4R)</option>
+                    <option value="5R">7 × 5 inch (5R) (2L)</option>
+
+                    <option value="A5">A5 (21 × 14.85 cm)</option>
+                    <option value="A4">A4 (29.7 × 21 cm)</option>
+                    <option value="letter">Letter (8.5 × 11 inch)</option>
+                    <option value="legal">Legal (8.5 × 14 inch)</option>
+                </select>
+                <!-- Passport Size -->
+                <label class="label-main mt">Passport Size</label>
+                @*<select id="sizeType" name="SizeType" class="dropdown">
+                    <option value="EU">EU – 35×45 mm</option>
+                    <option value="US">US – 2×2 inch</option>
+                    <option value="Custom">Custom</option>
+                </select>*@
+
+                <!-- Background Color -->
+                <label class="label-main mt">Background Color</label>
+                <select id="bgColor" name="BackgroundColor" class="dropdown">
+                    <option value="white">White</option>
+                    <option value="#43b0f1">Blue</option>
+                    <option value="gray">Gray</option>
+                    <option value="transparent">Transparent</option>
+                </select>
+
+                <!-- Photos per Sheet -->
+                <label class="label-main mt">Photos per Sheet</label>
+                <select id="sheetCount" name="SheetCount" class="dropdown">
+                    <option value="1">1 Photo</option>
+                    <option value="2">2 Photos</option>
+                    <option value="4">4 Photos</option>
+                    <option value="6">6 Photos</option>
+                    <option value="8">8 Photos</option>
+                </select>
+
+
+                <label class="label-main mt">Custom size</label>
+
+                <div class="size-row">
+                    <input id="widthInput" class="size-input" name="WidthPx" value="@Model.WidthPx" />
+                    <span class="x-sign">×</span>
+                    <input id="heightInput" class="size-input" name="HeightPx" value="@Model.HeightPx" />
+                </div>
+
+                <div class="sizes-list">
+                    <div class="size-card selected" onclick="selectSize(413,531, this)">
+                        <strong>USA (Passport)</strong>
+                        <div class="small">(2×2 inch) 600×600px</div>
+                    </div>
+                    <div class="size-card" onclick="selectSize(413,531, this)">
+                        <strong>UK (Passport)</strong>
+                        <div class="small">(35×45mm) 900×1200px</div>
+                    </div>
+
+                    <div class="size-card" onclick="selectSize(413,531, this)">
+                        <strong>EU (Passport)</strong>
+                        <div class="small">(35×45mm) 413×531px</div>
+                    </div>
+
+                    <div class="size-card" onclick="selectSize(413,531, this)">
+                        <strong>Germany (Passport)</strong>
+                        <div class="small">(35×45mm) 413×531px</div>
+                    </div>
+
+                    <div class="size-card" onclick="selectSize(413,531, this)">
+                        <strong>France (Passport)</strong>
+                        <div class="small">(35×45mm) 413×531px</div>
+                    </div>
+
+                    <div class="size-card" onclick="selectSize(413,531, this)">
+                        <strong>Australia (Passport)</strong>
+                        <div class="small">(35×45mm) 600×750px</div>
+                    </div>
+
+
+                    <div class="size-card" onclick="selectSize(413,531, this)">
+                        <strong>India (Passport)</strong>
+                        <div class="small">(2×2 inch) 413×531px</div>
+                    </div>
+
+                    <div class="size-card" onclick="selectSize(413,531, this)">
+                        <strong>Pakistan (Passport)</strong>
+                        <div class="small">(35×45mm) 413×531px</div>
+                    </div>
+
+                    <div class="size-card" onclick="selectSize(413,531, this)">
+                        <strong>Bangladesh (Passport)</strong>
+                        <div class="small">(35×45mm) 300×350px</div>
+                    </div>
+
+                    <div class="size-card" onclick="selectSize(413,531, this)">
+                        <strong>UAE (Emirates ID)</strong>
+                        <div class="small">(45×35mm) 420×540px</div>
+                    </div>
+
+
+
+
+                </div>
+
             </div>
 
-            <div class="col-md-3">
-                <label>Height (px)</label>
-                <input type="number" id="heightInput" name="HeightPx" class="form-control"
-                       value="472" required />
-            </div>
-
-            <div class="col-md-3">
-                <label>Background</label>
-                <input type="text" id="bgInput" class="form-control"
-                       value="@Model.BackgroundColor" disabled />
-            </div>
-
-            <div class="col-md-3">
-                <label>Copies</label>
-                <input type="number" id="copiesInput" class="form-control"
-                       value="@Model.SheetCount" />
+            <!-- RIGHT PREVIEW -->
+            <div class="preview-area">
+                <div class="preview-frame">
+                    <img id="previewPhoto" src="@Model.OriginalImagePath" />
+                </div>
             </div>
 
         </div>
-
-        <button type="submit" class="btn btn-success mt-4">
-            Process Photo
-        </button>
-    }
-</div>
-
-<div class="preview-wrapper">
-
-    <h2 class="preview-title">Preview Your Photo</h2>
-
-    <div class="photo-grid" id="previewGrid">
-        @for (int i = 0; i < Model.SheetCount; i++)
-        {
-            <div class="photo-box">
-                <img src="@Model.OriginalImagePath" class="preview-photo" />
-            </div>
-        }
     </div>
 
-</div>
+} <!-- END FORM -->
 
-@section scripts {
+@section scripts{
     <script>
+        document.getElementById("doneBtn").addEventListener("click", function () {
+
+            // Update Sheet Count
+            document.querySelector("input[name='SheetCount']").value =
+                document.getElementById("sheetCount").value;
+
+            // Background color
+            document.querySelector("input[name='BackgroundColor']").value =
+                document.getElementById("bgColor").value;
+
+            // SizeType
+            document.querySelector("input[name='SizeType']").value =
+                document.getElementById("sizeType").value;
+
+            // Submit
+            document.getElementById("previewForm").submit();
+        });
+
+        // -------------------------
+        // LIVE PREVIEW
+        // -------------------------
+        const previewPhoto = document.getElementById("previewPhoto");
         const widthInput = document.getElementById("widthInput");
         const heightInput = document.getElementById("heightInput");
-        const bgInput = document.getElementById("bgInput");
-        const copiesInput = document.getElementById("copiesInput");
-
-        const photoGrid = document.getElementById("previewGrid");
 
         function updatePreview() {
-            let width = parseInt(widthInput.value);
-            let height = parseInt(heightInput.value);
-            let bgColor = bgInput.value.toLowerCase();
-            let copies = parseInt(copiesInput.value);
+            previewPhoto.style.width = widthInput.value + "px";
+            previewPhoto.style.height = heightInput.value + "px";
+        }
 
-            let html = "";
-
-            for (let i = 0; i < copies; i++) {
-                html += `
-                    <div class="photo-box">
-                        <img src="@Model.OriginalImagePath"
-                             class="preview-photo"
-                             style="width:${width}px; height:${height}px; background:${bgColor};" />
-                    </div>`;
-            }
-
-            photoGrid.innerHTML = html;
+        function selectSize(w, h) {
+            widthInput.value = w;
+            heightInput.value = h;
+            updatePreview();
         }
 
         widthInput.addEventListener("input", updatePreview);
         heightInput.addEventListener("input", updatePreview);
-        bgInput.addEventListener("input", updatePreview);
-        copiesInput.addEventListener("input", updatePreview);
-
-        // First render
         updatePreview();
+
+
+        // -------------------------
+        // PAPER SIZE HANDLER
+        // -------------------------
+        const paperDropdown = document.getElementById("paperSize");
+
+        paperDropdown.addEventListener("change", function () {
+            switch (this.value) {
+
+                case "3R":
+                    setPaper(1050, 1500);
+                    break;
+
+                case "4R":
+                    setPaper(1800, 1200);
+                    break;
+
+                case "5R":
+                    setPaper(2100, 1500);
+                    break;
+
+                case "A5":
+                    setPaper(1485, 2102);
+                    break;
+
+                case "A4":
+                    setPaper(2480, 3508);
+                    break;
+
+                case "letter":
+                    setPaper(2550, 3300);
+                    break;
+
+                case "legal":
+                    setPaper(2550, 4200);
+                    break;
+
+                default:
+                    setPaper(null, null);
+                    break;
+            }
+        });
+
+        function setPaper(w, h) {
+            document.querySelector("input[name='PaperWidth']").value = w;
+            document.querySelector("input[name='PaperHeight']").value = h;
+        }
+
+
+        // -------------------------
+        // DONE BUTTON → SUBMIT FORM
+        // -------------------------
+        document.getElementById("doneBtn").addEventListener("click", function () {
+
+            document.querySelector("input[name='WidthPx']").value = widthInput.value;
+            document.querySelector("input[name='HeightPx']").value = heightInput.value;
+
+            document.getElementById("previewForm").submit();
+        });
+        // Update background live
+        document.getElementById("bgColor").addEventListener("change", function () {
+            previewPhoto.style.background = this.value;
+        });
+
+        // Update Sheet Count live
+        document.getElementById("sheetCount").addEventListener("change", function () {
+            document.querySelector("input[name='SheetCount']").value = this.value;
+            updatePreview();
+        });
+        //for AutoSelected
+        document.addEventListener("DOMContentLoaded", function () {
+            const def = document.querySelector(".size-card.selected");
+            if (def) def.click();
+        });
+        function selectSize(w, h, el) {
+            // Set values
+            widthInput.value = w;
+            heightInput.value = h;
+            updatePreview();
+
+            // Remove selected class from all cards
+            document.querySelectorAll('.size-card')
+                .forEach(card => card.classList.remove('selected'));
+
+            // Add selected class to clicked card
+            el.classList.add('selected');
+        }
+
     </script>
 }

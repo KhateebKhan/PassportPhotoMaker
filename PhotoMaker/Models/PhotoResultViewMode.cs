@@ -19,6 +19,8 @@ namespace PhotoMaker.Models
         public int HeightPx { get; set; }
         public string FinalSheetImagePath { get; set; }
         public int SheetWidthPx { get; set; }
+        public int PaperWidthPx { get; set; }
+        public int PaperHeightPx { get; set; }
         public string SheetWidthPxpx => SheetWidthPx + "px";
 
 

@@ -13,49 +13,89 @@ namespace PhotoMaker.Helpers
 
     public static class PassportSheetBuilder
     {
-        public static Bitmap BuildA4Sheet(Bitmap passportPhoto, SheetStyle style)
+        public static Bitmap ResizeToPassport(Bitmap img)
         {
-            int a4W = 2480; // A4 @ 300 DPI
+            // 35x45 mm at 300 DPI → 413x531 px
+            int w = (int)((35f / 25.4f) * 300);
+            int h = (int)((45f / 25.4f) * 300);
+
+            Bitmap output = new Bitmap(w, h);
+            using (Graphics g = Graphics.FromImage(output))
+            {
+                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                g.DrawImage(img, 0, 0, w, h);
+            }
+
+            return output;
+        }
+        public static Bitmap BuildCustomSheet(Bitmap passport, int count, int paperW, int paperH)
+        {
+            Bitmap canvas = new Bitmap(paperW, paperH);
+            using (Graphics g = Graphics.FromImage(canvas))
+            {
+                g.Clear(Color.White);
+
+                int padding = 20;
+                int x = padding;
+                int y = padding;
+
+                for (int i = 0; i < count; i++)
+                {
+                    g.DrawImage(passport, x, y, passport.Width, passport.Height);
+
+                    x += passport.Width + padding;
+
+                    if (x + passport.Width > paperW)
+                    {
+                        x = padding;
+                        y += passport.Height + padding;
+                    }
+                }
+            }
+
+            return canvas;
+        }
+
+        public static Bitmap BuildA4Sheet(Bitmap passportPhoto, int count)
+        {
+            int a4W = 2480;
             int a4H = 3508;
 
             Bitmap sheet = new Bitmap(a4W, a4H);
             Graphics g = Graphics.FromImage(sheet);
             g.Clear(Color.White);
 
-            int pw = passportPhoto.Width;  // 413 px
-            int ph = passportPhoto.Height; // 531 px
+            int pw = passportPhoto.Width;
+            int ph = passportPhoto.Height;
 
             int margin = 80;
-            int spacing = 80;
+            int spacing = 60;
 
-            int startX = margin;
-            int startY = margin;
+            // Determine grid automatically
+            int cols = (count >= 4) ? 2 : 1;    // 1 or 2 columns
+            int rows = (int)Math.Ceiling(count / (double)cols);
 
-            for (int r = 0; r < 4; r++)
+            int index = 0;
+
+            for (int r = 0; r < rows; r++)
             {
-                for (int c = 0; c < 2; c++)
+                for (int c = 0; c < cols; c++)
                 {
-                    int x = startX + c * (pw + spacing);
-                    int y = startY + r * (ph + spacing);
+                    if (index >= count)
+                        break;
 
-                    if (style == SheetStyle.StyledGrid)
-                    {
-                        g.FillRectangle(Brushes.LightGray, x - 20, y - 20, pw + 40, ph + 40);
-                        g.FillRectangle(Brushes.White, x - 10, y - 10, pw + 20, ph + 20);
-                        g.DrawRectangle(Pens.Gray, x - 1, y - 1, pw + 2, ph + 2);
-                    }
-
-                    if (style == SheetStyle.PassportWithBorders)
-                    {
-                        g.DrawRectangle(new Pen(Color.Black, 3), x - 5, y - 5, pw + 10, ph + 10);
-                    }
+                    int x = margin + c * (pw + spacing);
+                    int y = margin + r * (ph + spacing);
 
                     g.DrawImage(passportPhoto, x, y, pw, ph);
+
+                    index++;
                 }
             }
 
             g.Dispose();
             return sheet;
         }
+
     }
 }

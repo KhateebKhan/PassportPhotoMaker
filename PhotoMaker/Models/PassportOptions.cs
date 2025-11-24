@@ -15,6 +15,9 @@ namespace PhotoMaker.Models
         public string BackgroundColor { get; set; }
         public int SheetCount { get; set; }
         public string SizeType { get; set; }   // "EU", "US", or "Custom"
+        public string PaperSize { get; set; }
+        public int PaperWidth { get; set; }
+        public int PaperHeight { get; set; }
 
 
     }
