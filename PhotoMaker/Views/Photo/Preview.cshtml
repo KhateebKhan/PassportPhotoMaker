@@ -49,10 +49,10 @@
                 <!-- Passport Size -->
                 <label class="label-main mt">Passport Size</label>
                 @*<select id="sizeType" name="SizeType" class="dropdown">
-                    <option value="EU">EU – 35×45 mm</option>
-                    <option value="US">US – 2×2 inch</option>
-                    <option value="Custom">Custom</option>
-                </select>*@
+                        <option value="EU">EU – 35×45 mm</option>
+                        <option value="US">US – 2×2 inch</option>
+                        <option value="Custom">Custom</option>
+                    </select>*@
 
                 <!-- Background Color -->
                 <label class="label-main mt">Background Color</label>
@@ -151,30 +151,25 @@
     </div>
 
 } <!-- END FORM -->
-
 @section scripts{
     <script>
+
+        // -------- DONE BUTTON --------
         document.getElementById("doneBtn").addEventListener("click", function () {
 
-            // Update Sheet Count
-            document.querySelector("input[name='SheetCount']").value =
-                document.getElementById("sheetCount").value;
-
-            // Background color
-            document.querySelector("input[name='BackgroundColor']").value =
-                document.getElementById("bgColor").value;
-
-            // SizeType
-            document.querySelector("input[name='SizeType']").value =
-                document.getElementById("sizeType").value;
+            // Update hidden fields
+            document.querySelector("input[name='WidthPx']").value = widthInput.value;
+            document.querySelector("input[name='HeightPx']").value = heightInput.value;
+            document.querySelector("input[name='BackgroundColor']").value = document.getElementById("bgColor").value;
+            document.querySelector("input[name='SheetCount']").value = document.getElementById("sheetCount").value;
+            document.querySelector("input[name='SelectedPaperSize']").value = document.getElementById("paperSize").value;
 
             // Submit
             document.getElementById("previewForm").submit();
         });
 
-        // -------------------------
-        // LIVE PREVIEW
-        // -------------------------
+
+        // -------- LIVE PREVIEW --------
         const previewPhoto = document.getElementById("previewPhoto");
         const widthInput = document.getElementById("widthInput");
         const heightInput = document.getElementById("heightInput");
@@ -184,103 +179,84 @@
             previewPhoto.style.height = heightInput.value + "px";
         }
 
-        function selectSize(w, h) {
-            widthInput.value = w;
-            heightInput.value = h;
-            updatePreview();
-        }
-
         widthInput.addEventListener("input", updatePreview);
         heightInput.addEventListener("input", updatePreview);
-        updatePreview();
 
 
-        // -------------------------
-        // PAPER SIZE HANDLER
-        // -------------------------
-        const paperDropdown = document.getElementById("paperSize");
+        // -------- SELECT SIZE CARDS --------
+        function selectSize(w, h, el) {
+            widthInput.value = w;
+            heightInput.value = h;
 
-        paperDropdown.addEventListener("change", function () {
-            switch (this.value) {
+            updatePreview();
 
-                case "3R":
-                    setPaper(1050, 1500);
-                    break;
+            document.querySelectorAll('.size-card')
+                .forEach(card => card.classList.remove('selected'));
 
-                case "4R":
-                    setPaper(1800, 1200);
-                    break;
-
-                case "5R":
-                    setPaper(2100, 1500);
-                    break;
-
-                case "A5":
-                    setPaper(1485, 2102);
-                    break;
-
-                case "A4":
-                    setPaper(2480, 3508);
-                    break;
-
-                case "letter":
-                    setPaper(2550, 3300);
-                    break;
-
-                case "legal":
-                    setPaper(2550, 4200);
-                    break;
-
-                default:
-                    setPaper(null, null);
-                    break;
-            }
-        });
-
-        function setPaper(w, h) {
-            document.querySelector("input[name='PaperWidth']").value = w;
-            document.querySelector("input[name='PaperHeight']").value = h;
+            el.classList.add('selected');
         }
 
 
-        // -------------------------
-        // DONE BUTTON → SUBMIT FORM
-        // -------------------------
-        document.getElementById("doneBtn").addEventListener("click", function () {
-
-            document.querySelector("input[name='WidthPx']").value = widthInput.value;
-            document.querySelector("input[name='HeightPx']").value = heightInput.value;
-
-            document.getElementById("previewForm").submit();
-        });
-        // Update background live
-        document.getElementById("bgColor").addEventListener("change", function () {
-            previewPhoto.style.background = this.value;
-        });
-
-        // Update Sheet Count live
-        document.getElementById("sheetCount").addEventListener("change", function () {
-            document.querySelector("input[name='SheetCount']").value = this.value;
-            updatePreview();
-        });
-        //for AutoSelected
+        // Auto select default size on load
         document.addEventListener("DOMContentLoaded", function () {
             const def = document.querySelector(".size-card.selected");
             if (def) def.click();
         });
-        function selectSize(w, h, el) {
-            // Set values
-            widthInput.value = w;
-            heightInput.value = h;
-            updatePreview();
 
-            // Remove selected class from all cards
-            document.querySelectorAll('.size-card')
-                .forEach(card => card.classList.remove('selected'));
 
-            // Add selected class to clicked card
-            el.classList.add('selected');
-        }
+        // -------- PAPER SIZE HANDLER --------
+
+        document.getElementById("paperSize").addEventListener("change", function () {
+
+            let w = null, h = null;
+
+            switch (this.value) {
+
+                case "3R":      // 3.5 x 5 inch
+                    w = 1050; h = 1500;
+                    break;
+
+                case "4R":      // 6 × 4 inch
+                    w = 1800; h = 1200;
+                    break;
+
+                case "5R":      // 7 × 5 inch
+                    w = 2100; h = 1500;
+                    break;
+
+                case "A5":      // portrait
+                    w = 1748; h = 2480;
+                    break;
+
+                case "A4":      // portrait
+                    w = 2480; h = 3508;
+                    break;
+
+                case "letter":
+                    w = 2550; h = 3300;
+                    break;
+
+                case "legal":
+                    w = 2550; h = 4200;
+                    break;
+            }
+
+            document.querySelector("input[name='PaperWidth']").value = w;
+            document.querySelector("input[name='PaperHeight']").value = h;
+        });
+
+
+        // -------- BACKGROUND COLOR LIVE --------
+        document.getElementById("bgColor").addEventListener("change", function () {
+            previewPhoto.style.background = this.value;
+        });
+
+        // -------- SHEET COUNT LIVE --------
+        document.getElementById("sheetCount").addEventListener("change", function () {
+            document.querySelector("input[name='SheetCount']").value = this.value;
+        });
 
     </script>
+}
+
 }

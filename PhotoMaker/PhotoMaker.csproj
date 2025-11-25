@@ -224,6 +224,7 @@
     <Content Include="Content\haarcascade_frontalface_default.xml" />
     <Content Include="Content\Preview\Preview_Style.css" />
     <Content Include="Content\Preview\SheetStyle.css" />
+    <Content Include="Content\Result\Result.css" />
     <Content Include="Content\upload\upload_style.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />

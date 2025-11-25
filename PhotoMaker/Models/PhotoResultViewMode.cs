@@ -9,6 +9,7 @@ namespace PhotoMaker.Models
     {
         public string OriginalImageName { get; set; }
 
+
         public string OriginalImagePath { get; set; }
 
         public List<string> ProcessedImages { get; set; }

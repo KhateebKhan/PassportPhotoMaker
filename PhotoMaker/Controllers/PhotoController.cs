@@ -151,6 +151,14 @@ namespace YourProject.Controllers
             finalPassportImage.Save(passportPath, ImageFormat.Jpeg);
 
 
+            // ⭐ MAIN IMAGE FOR RESULT PAGE ⭐
+            string processedFinalName = "final_" + Guid.NewGuid() + ".jpg";
+            string processedFinalPath = Path.Combine(OutputFolder, processedFinalName);
+            finalPassportImage.Save(processedFinalPath, ImageFormat.Jpeg);
+
+            // Browser URL
+            string processedFinalUrl = "/Content/Output/" + processedFinalName;
+
             // ---------------------------------------------
             // 5) Generate multiple copies (for preview)
             // ---------------------------------------------
@@ -190,6 +198,7 @@ namespace YourProject.Controllers
             var vm = new PhotoResultViewModel
             {
                 OriginalImagePath = "/Content/Output/" + options.OriginalImageName,
+                ProcessedImagePath = processedFinalUrl,
                 ProcessedImages = processedImages,
                 SheetCount = options.SheetCount,
                 WidthPx = passportWidth,
