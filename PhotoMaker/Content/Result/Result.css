@@ -10,7 +10,6 @@
     align-items: start;
 }
 
-
 .img-box {
     background: #fff;
     padding: 25px;
@@ -20,13 +19,28 @@
     justify-content: center;
     align-items: center;
     height: 450px;
+    overflow: hidden;
 }
 
-    .img-box img {
-        max-width: 100%;
-        max-height: 100%;
-        border-radius: 12px;
-    }
+/* ⭐ Original + Final Sheet should auto-scale */
+.auto-img {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 12px;
+}
+
+/* ⭐ Result image (passport) must show exact pixel size */
+.real-size-box {
+    overflow: auto !important;
+}
+
+.real-size-img {
+    max-width: none !important;
+    max-height: none !important;
+    width: auto !important;
+    height: auto !important;
+    display: block;
+}
 
 .action-area {
     text-align: center;
@@ -42,34 +56,3 @@
     border: none;
 }
 
-.sheet-box {
-    margin-top: 40px;
-    padding: 25px;
-    background: #fff;
-    border-radius: 16px;
-    box-shadow: 0 4px 20px rgba(0,0,0,.08);
-    text-align: center;
-}
-
-    .sheet-box img {
-        max-width: 100%;
-        border-radius: 12px;
-    }
-
-.small-strip {
-    margin-top: 45px;
-    padding: 15px;
-    background: #fafafa;
-    border-radius: 12px;
-    border: 1px solid #ececec;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
-}
-
-.tiny-img {
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-}

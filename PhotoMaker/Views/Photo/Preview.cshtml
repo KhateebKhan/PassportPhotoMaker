@@ -49,19 +49,51 @@
                 <!-- Passport Size -->
                 <label class="label-main mt">Passport Size</label>
                 @*<select id="sizeType" name="SizeType" class="dropdown">
-                        <option value="EU">EU – 35×45 mm</option>
-                        <option value="US">US – 2×2 inch</option>
-                        <option value="Custom">Custom</option>
-                    </select>*@
+            <option value="EU">EU – 35×45 mm</option>
+            <option value="US">US – 2×2 inch</option>
+            <option value="Custom">Custom</option>
+        </select>*@
 
                 <!-- Background Color -->
                 <label class="label-main mt">Background Color</label>
-                <select id="bgColor" name="BackgroundColor" class="dropdown">
-                    <option value="white">White</option>
-                    <option value="#43b0f1">Blue</option>
-                    <option value="gray">Gray</option>
-                    <option value="transparent">Transparent</option>
-                </select>
+                <label class="label-main mt">Classical background color</label>
+
+                <div class="color-grid">
+                    <div class="color-btn" data-color="white" style="background:white"></div>
+                    <div class="color-btn" data-color="#ff0000" style="background:#ff0000"></div>
+                    <div class="color-btn" data-color="#007bff" style="background:#007bff"></div>
+                    <div class="color-btn" data-color="#000000" style="background:black"></div>
+                    <div class="color-btn" data-color="#f0f0f0" style="background:#f0f0f0"></div>
+                    <div class="color-btn" data-color="#2cb4ff" style="background:#2cb4ff"></div>
+                </div>
+
+                <label class="label-main mt">Stylish background color</label>
+
+                <div class="color-grid">
+
+                    <!-- Gradient box -->
+                    <div class="color-btn gradient-picker"></div>
+
+                    <!-- Solid stylish colors -->
+                    <div class="color-btn" data-color="#ffb3ba" style="background:#ffb3ba"></div>
+                    <div class="color-btn" data-color="#ffdfba" style="background:#ffdfba"></div>
+                    <div class="color-btn" data-color="#ffffba" style="background:#ffffba"></div>
+                    <div class="color-btn" data-color="#baffc9" style="background:#baffc9"></div>
+                    <div class="color-btn" data-color="#bae1ff" style="background:#bae1ff"></div>
+                    <div class="color-btn" data-color="#d7d7d7" style="background:#d7d7d7"></div>
+
+                    <div class="color-btn" data-color="#ff7f7f" style="background:#ff7f7f"></div>
+                    <div class="color-btn" data-color="#ffbf7f" style="background:#ffbf7f"></div>
+                    <div class="color-btn" data-color="#ffdf7f" style="background:#ffdf7f"></div>
+                    <div class="color-btn" data-color="#7fffd4" style="background:#7fffd4"></div>
+                    <div class="color-btn" data-color="#7fbfff" style="background:#7fbfff"></div>
+                    <div class="color-btn" data-color="#b5b5b5" style="background:#b5b5b5"></div>
+
+                </div>
+
+                <!-- this hidden field will store selected color -->
+                <input type="hidden" id="bgColor" name="BackgroundColor" value="@Model.BackgroundColor" />
+
 
                 <!-- Photos per Sheet -->
                 <label class="label-main mt">Photos per Sheet</label>
@@ -142,7 +174,7 @@
 
             <!-- RIGHT PREVIEW -->
             <div class="preview-area">
-                <div class="preview-frame">
+                <div class="preview-frame" id="previewFrame">
                     <img id="previewPhoto" src="@Model.OriginalImagePath" />
                 </div>
             </div>
@@ -153,6 +185,35 @@
 } <!-- END FORM -->
 @section scripts{
     <script>
+ 
+        // ===== CLEAN WORKING COLOR PICKER (ONLY THIS ONE) =====
+        document.querySelectorAll(".color-btn").forEach(btn => {
+            btn.addEventListener("click", function () {
+
+                let color = this.dataset.color;
+
+                // If gradient picker -> ask user
+                if (this.classList.contains("gradient-picker")) {
+                    color = prompt("Enter HEX color (e.g. #43b0f1):", "#43b0f1");
+                    if (!color) return;
+                }
+
+                // Set selected color to hidden input
+                document.getElementById("bgColor").value = color;
+
+                // Update preview frame color
+                document.getElementById("previewFrame").style.background = color;
+
+                // Remove previous highlight
+                document.querySelectorAll(".color-btn").forEach(x =>
+                    x.classList.remove("selected")
+                );
+
+                // Add highlight to clicked
+                this.classList.add("selected");
+            });
+        });
+
 
         // -------- DONE BUTTON --------
         document.getElementById("doneBtn").addEventListener("click", function () {
@@ -255,6 +316,7 @@
         document.getElementById("sheetCount").addEventListener("change", function () {
             document.querySelector("input[name='SheetCount']").value = this.value;
         });
+       
 
     </script>
 }

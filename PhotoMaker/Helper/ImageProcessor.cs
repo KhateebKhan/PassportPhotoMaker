@@ -15,26 +15,38 @@ namespace PassportPhotoAI.Helpers
             using (var original = new Bitmap(ms))
             {
                 // STEP 1: Replace background
-                Color bg = options.BackgroundColor == "blue"
-                    ? Color.FromArgb(0, 148, 255)
-                    : Color.White;
-
+                Color bg = GetColor(options.BackgroundColor);
                 Bitmap replaced = ReplaceBackground(original, bg);
 
-                // STEP 2: Resize based on passport type
-                Bitmap resized = ResizePassportPhoto(replaced, options.SizeType);
+                // STEP 2: Resize to EXACT width/height selected by user
+                Bitmap resized = ResizePassportPhoto(
+                    replaced,
+                    options.WidthPx,
+                    options.HeightPx
+                );
 
-                // STEP 3: Generate Sheet (if > 1)
+                // STEP 3: Generate sheet
                 if (options.SheetCount > 1)
                     resized = GenerateSheet(resized, options.SheetCount);
 
-                // Return final bytes
                 using (MemoryStream output = new MemoryStream())
                 {
                     resized.Save(output, ImageFormat.Png);
                     return output.ToArray();
                 }
             }
+        }
+
+        private Color GetColor(string bg)
+        {
+            if (bg == "white") return Color.White;
+            if (bg == "gray") return Color.LightGray;
+            if (bg == "transparent") return Color.Transparent;
+
+            if (bg.StartsWith("#"))
+                return ColorTranslator.FromHtml(bg);
+
+            return Color.FromArgb(0, 148, 255); // default blue
         }
 
         private Bitmap ReplaceBackground(Bitmap original, Color bgColor)
@@ -48,42 +60,43 @@ namespace PassportPhotoAI.Helpers
             return bmp;
         }
 
-        private Bitmap ResizePassportPhoto(Bitmap img, string type)
+        // ⭐ FINAL FIXED VERSION — uses WidthPx/HeightPx from user selection
+        private Bitmap ResizePassportPhoto(Bitmap img, int targetWidth, int targetHeight)
         {
-            int width, height;
+            float ratio = Math.Min(
+                (float)targetWidth / img.Width,
+                (float)targetHeight / img.Height
+            );
 
-            if (type == "EU")
-            {
-                width = 413;
-                height = 531;
-            }
-            else // US
-            {
-                width = 600;
-                height = 600;
-            }
+            int newWidth = (int)(img.Width * ratio);
+            int newHeight = (int)(img.Height * ratio);
 
-            Bitmap resized = new Bitmap(width, height);
+            Bitmap canvas = new Bitmap(targetWidth, targetHeight);
 
-            using (Graphics g = Graphics.FromImage(resized))
+            using (Graphics g = Graphics.FromImage(canvas))
             {
+                g.Clear(Color.White);
                 g.SmoothingMode = SmoothingMode.HighQuality;
                 g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                g.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
-                g.DrawImage(img, 0, 0, width, height);
+                int offsetX = (targetWidth - newWidth) / 2;
+                int offsetY = (targetHeight - newHeight) / 2;
+
+                g.DrawImage(img, offsetX, offsetY, newWidth, newHeight);
             }
 
-            return resized;
+            return canvas;
         }
 
         private Bitmap GenerateSheet(Bitmap img, int sheetCount)
         {
             int rows = 1, cols = 1;
 
+            if (sheetCount == 2) { rows = 1; cols = 2; }
             if (sheetCount == 4) { rows = 2; cols = 2; }
-            else if (sheetCount == 6) { rows = 2; cols = 3; }
-            else if (sheetCount == 12) { rows = 3; cols = 4; }
+            if (sheetCount == 6) { rows = 2; cols = 3; }
+            if (sheetCount == 8) { rows = 2; cols = 4; }
+            if (sheetCount == 12) { rows = 3; cols = 4; }
 
             int width = img.Width * cols;
             int height = img.Height * rows;
@@ -92,6 +105,8 @@ namespace PassportPhotoAI.Helpers
 
             using (Graphics g = Graphics.FromImage(sheet))
             {
+                g.Clear(Color.White);
+
                 for (int r = 0; r < rows; r++)
                 {
                     for (int c = 0; c < cols; c++)
