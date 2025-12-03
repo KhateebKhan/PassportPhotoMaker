@@ -1,0 +1,32 @@
+/* Simple hero styles for PDF/Word conversion page */
+.pdf-hero{ padding:80px 0; background:#f6f6f9; min-height:320px;}
+#heroTitle{ font-weight:700; font-size:36px; margin-bottom:8px;}
+#heroSubtitle{ font-size:16px; margin-bottom:24px; color:#6c757d;}
+.convert-btn{ background:#e23b36; color:#fff; padding:18px 36px; border-radius:10px; border:none; box-shadow:0 8px 20px rgba(226,59,54,0.25); font-size:18px;}
+.convert-btn:hover{ background:#d23531}
+.btn-circle{ width:40px; height:40px; border-radius:50%; background:#e23b36; display:inline-flex; align-items:center; justify-content:center; color:#fff; margin-left:8px}
+.conversion-options label{ margin-right:18px; font-weight:600; color:#444}
+
+.conversion-options .option{ display:inline-flex; align-items:center; padding:10px 16px; border-radius:8px; cursor:pointer; border:1px solid transparent; transition:all .12s ease; font-weight:700 }
+.conversion-options .option:hover{ background:rgba(0,0,0,0.02); border-color:rgba(0,0,0,0.06) }
+.conversion-options .option.active{ background:#fff; box-shadow:0 8px 24px rgba(0,0,0,0.06); border-color:rgba(0,0,0,0.08); outline: none }
+.conversion-options .option{ border:1px solid transparent }
+.conversion-options .option:focus{ outline:none; box-shadow:0 8px 24px rgba(0,0,0,0.06) }
+.conversion-options .option .bi{ font-size:20px }
+
+/* Drop zone */
+.drop-zone{ border-radius:12px; border:2px dashed rgba(0,0,0,0.06); background:#fff; padding:40px; cursor:pointer; transition:box-shadow .15s ease, border-color .15s ease;}
+.drop-zone.dragover{ box-shadow:0 10px 30px rgba(0,0,0,0.08); border-color: rgba(226,59,54,0.6);}
+.drop-zone .drop-inner{ max-width:520px; margin:0 auto;}
+
+/* Preview card */
+.preview-area{ display:flex; justify-content:center; }
+.preview-card{ width:200px; background:#fff; border-radius:8px; padding:18px; box-shadow:0 6px 16px rgba(0,0,0,0.06);}
+.preview-inner{ text-align:center }
+.preview-thumb{ width:160px; height:220px; margin:0 auto; display:flex; align-items:center; justify-content:center; background:#fafafa; border-radius:6px; box-shadow:0 2px 6px rgba(0,0,0,0.04);}
+.preview-name{ font-size:13px; color:#666; max-width:160px; overflow:hidden }
+
+/* Floating add button */
+.floating-add{ position:fixed; right:28px; top:160px; z-index:1050 }
+.add-btn{ width:48px; height:48px; border-radius:50%; background:#e23b36; color:#fff; border:none; font-size:28px; box-shadow:0 8px 20px rgba(226,59,54,0.25) }
+.badge-count{ position:relative; top:-12px; left:22px; background:#000; color:#fff; width:20px; height:20px; border-radius:50%; font-size:12px; display:inline-flex; align-items:center; justify-content:center }

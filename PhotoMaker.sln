@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36705.20 d17.14
+VisualStudioVersion = 17.14.36705.20
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotoMaker", "PhotoMaker\PhotoMaker.csproj", "{15EB268D-8142-47A8-BA32-3DC06E85FA09}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PDFtoWord", "PDFtoWord\PDFtoWord.csproj", "{3477826C-F427-49AE-808B-E2FEDDDAF017}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{15EB268D-8142-47A8-BA32-3DC06E85FA09}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{15EB268D-8142-47A8-BA32-3DC06E85FA09}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{15EB268D-8142-47A8-BA32-3DC06E85FA09}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3477826C-F427-49AE-808B-E2FEDDDAF017}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3477826C-F427-49AE-808B-E2FEDDDAF017}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3477826C-F427-49AE-808B-E2FEDDDAF017}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3477826C-F427-49AE-808B-E2FEDDDAF017}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

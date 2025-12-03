@@ -1,0 +1,260 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<link href="~/Content/pdfconvert.css" rel="stylesheet" />
+
+<main class="pdf-hero">
+    <div class="container text-center">
+        @if (TempData["Message"] != null)
+        {
+            <div class="alert alert-info">@TempData["Message"]</div>
+        }
+        <div id="clientMessage"></div>
+
+        <h1 id="heroTitle">Convert WORD to PDF</h1>
+        <p class="lead text-muted" id="heroSubtitle">Make DOC and DOCX files easy to read by converting them to PDF.</p>
+
+        <form id="uploadForm" action="@Url.Action("Upload", "Home")" method="post" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+
+            <input type="file" name="file" id="file" accept="application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.docx" style="display:none" />
+
+            <input type="hidden" name="conversion" id="conversion" value="docx2pdf" />
+
+            <div id="dropZone" class="drop-zone d-flex justify-content-center align-items-center mt-4">
+                <div class="drop-inner text-center">
+                    <button id="selectBtn" type="button" class="convert-btn">Select WORD files</button>
+                    <div class="btn-circle ml-3" title="cloud"><i class="bi bi-cloud"></i></div>
+                    <div class="btn-circle ml-2" title="dropbox"><i class="bi bi-box"></i></div>
+                    <p class="mt-3 text-muted small">or drop documents here</p>
+                    <div id="fileInfo" class="file-info mt-3" style="display:none">
+                        <span class="file-ok text-success me-2"><i class="bi bi-check-lg"></i></span>
+                        <span id="fileName" class="file-name"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Preview card area -->
+            <div id="previewArea" class="preview-area mt-5">
+                <div id="previewCard" class="preview-card" style="display:none">
+                    <div class="preview-inner">
+                        <div id="previewThumb" class="preview-thumb">
+                            <iframe id="previewFrame" style="width:160px;height:220px;border:0;display:none"></iframe>
+                            <div id="previewIcon" class="preview-icon" style="display:none"><i class="bi bi-file-earmark-pdf-fill text-danger" style="font-size:64px"></i></div>
+                        </div>
+                        <div class="preview-name mt-2 text-truncate" id="previewName"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- floating add removed from Index; handled on Preview page -->
+
+            <div class="conversion-options mt-4">
+                <button type="button" class="option me-3 active" data-mode="docx2pdf"><i class="bi bi-file-earmark-word-fill text-primary me-2"></i> Word → PDF</button>
+                <button type="button" class="option" data-mode="pdf2docx"><i class="bi bi-file-earmark-pdf-fill text-danger me-2"></i> PDF → Word</button>
+            </div>
+        </form>
+    </div>
+</main>
+
+@section scripts {
+    <script>
+        (function(){
+            var file = document.getElementById('file');
+            var selectBtn = document.getElementById('selectBtn');
+            var conversionHidden = document.getElementById('conversion');
+            var heroTitle = document.getElementById('heroTitle');
+            var heroSubtitle = document.getElementById('heroSubtitle');
+            var dropZone = document.getElementById('dropZone');
+
+            function updateUI(mode){
+                if(mode === 'pdf2docx'){
+                    heroTitle.textContent = 'Convert PDF to WORD';
+                    heroSubtitle.textContent = 'Convert PDF files to editable Word documents.';
+                    selectBtn.textContent = 'Select PDF files';
+                    conversionHidden.value = 'pdf2docx';
+                } else {
+                    heroTitle.textContent = 'Convert WORD to PDF';
+                    heroSubtitle.textContent = 'Make DOC and DOCX files easy to read by converting them to PDF.';
+                    selectBtn.textContent = 'Select WORD files';
+                    conversionHidden.value = 'docx2pdf';
+                }
+            }
+
+            // option button clicks
+            var optionButtons = document.querySelectorAll('.conversion-options .option');
+            function setActiveOption(mode){
+                optionButtons.forEach(function(btn){
+                    if(btn.getAttribute('data-mode') === mode) btn.classList.add('active');
+                    else btn.classList.remove('active');
+                });
+            }
+
+            optionButtons.forEach(function(btn){
+                btn.addEventListener('click', function(){
+                    var mode = btn.getAttribute('data-mode');
+                    // set hidden conversion value
+                    var hidden = document.getElementById('conversion');
+                    if(hidden) hidden.value = mode;
+                    updateUI(mode);
+                    setActiveOption(mode);
+                });
+            });
+
+            selectBtn.addEventListener('click', function(){ file.click(); });
+
+            function showFileInfo(name){
+                var info = document.getElementById('fileInfo');
+                var nameEl = document.getElementById('fileName');
+                if(!info || !nameEl) return;
+                nameEl.textContent = name;
+                info.style.display = 'inline-block';
+            }
+
+            function updatePreview(file){
+                var card = document.getElementById('previewCard');
+                var name = document.getElementById('previewName');
+                var frame = document.getElementById('previewFrame');
+                var icon = document.getElementById('previewIcon');
+
+                if(!card || !name) return;
+                name.textContent = file.name;
+                card.style.display = 'block';
+
+                if(file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf')){
+                    icon.style.display = 'none';
+                    var url = URL.createObjectURL(file);
+                    frame.src = url;
+                    frame.style.display = 'block';
+                } else {
+                    if(frame){ frame.style.display = 'none'; frame.src = ''; }
+                    icon.style.display = 'block';
+                }
+            }
+
+            function bumpBadge(){
+                var badge = document.getElementById('badgeCount');
+                if(!badge) return;
+                var val = parseInt(badge.textContent||'0',10); val++; badge.textContent = val;
+            }
+
+            // handle file input change (show info then upload via AJAX)
+            file.addEventListener('change', function(){
+                if(file.files.length > 0){
+                    var f = file.files[0];
+                    showFileInfo(f.name);
+                    updatePreview(f);
+                    // upload after short delay so user sees tick
+                    setTimeout(function(){
+                        ajaxUploadFile(f);
+                    }, 700);
+                }
+            });
+
+            // Drag and drop handling
+            function preventDefaults(e){ e.preventDefault(); e.stopPropagation(); }
+            ['dragenter','dragover','dragleave','drop'].forEach(function(eventName){
+                dropZone.addEventListener(eventName, preventDefaults, false);
+            });
+
+            ['dragenter','dragover'].forEach(function(eventName){
+                dropZone.addEventListener(eventName, function(){ dropZone.classList.add('dragover'); }, false);
+            });
+            ['dragleave','drop'].forEach(function(eventName){
+                dropZone.addEventListener(eventName, function(){ dropZone.classList.remove('dragover'); }, false);
+            });
+
+            dropZone.addEventListener('drop', function(e){
+                var dt = e.dataTransfer;
+                if (!dt || !dt.files || dt.files.length === 0) return;
+
+                var droppedFile = dt.files[0];
+
+                showFileInfo(droppedFile.name);
+                updatePreview(droppedFile);
+
+                // Build FormData and POST via fetch so we can include anti-forgery token
+                var form = document.getElementById('uploadForm');
+                var tokenInput = form.querySelector('input[name="__RequestVerificationToken"]');
+                var token = tokenInput ? tokenInput.value : '';
+
+                var fd = new FormData();
+                fd.append('file', droppedFile, droppedFile.name);
+                fd.append('conversion', conversionHidden.value);
+                if(token) fd.append('__RequestVerificationToken', token);
+
+                // Show simple uploading state
+                selectBtn.textContent = 'Uploading...';
+
+                fetch(form.action, {
+                    method: 'POST',
+                    body: fd,
+                    credentials: 'same-origin',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                }).then(function(response){
+                    return response.json();
+                }).then(function(json){
+                    if(json && json.success){
+                        bumpBadge();
+                        selectBtn.textContent = 'Select files';
+                        showClientMessage(json.message || 'Uploaded');
+                        if(json.file){
+                            window.location = '@Url.Action("Preview","Home")' + '?file=' + encodeURIComponent(json.file);
+                            return;
+                        }
+                    } else {
+                        selectBtn.textContent = 'Select files';
+                        showClientMessage((json && json.message) || 'Upload failed', 'danger');
+                    }
+                }).catch(function(err){
+                    console.error(err);
+                    alert('Upload failed.');
+                    selectBtn.textContent = 'Select files';
+                });
+            });
+
+            function showClientMessage(msg, type){
+                var container = document.getElementById('clientMessage');
+                if(!container) return;
+                type = type || 'info';
+                container.innerHTML = '<div class="alert alert-' + type + '">' + msg + '</div>';
+            }
+
+            function ajaxUploadFile(droppedFile){
+                var form = document.getElementById('uploadForm');
+                var tokenInput = form.querySelector('input[name="__RequestVerificationToken"]');
+                var token = tokenInput ? tokenInput.value : '';
+
+                var fd = new FormData();
+                fd.append('file', droppedFile, droppedFile.name);
+                fd.append('conversion', conversionHidden.value);
+                if(token) fd.append('__RequestVerificationToken', token);
+
+                selectBtn.textContent = 'Uploading...';
+                fetch(form.action, {
+                    method: 'POST',
+                    body: fd,
+                    credentials: 'same-origin',
+                    headers: { 'X-Requested-With': 'XMLHttpRequest' }
+                }).then(function(r){ return r.json(); }).then(function(json){
+                    if(json && json.success){
+                        bumpBadge();
+                        showClientMessage(json.message || 'Uploaded');
+                        if(json.file){
+                            window.location = '@Url.Action("Preview","Home")' + '?file=' + encodeURIComponent(json.file);
+                            return;
+                        }
+                    }
+                    else { showClientMessage((json && json.message) || 'Upload failed', 'danger'); }
+                    selectBtn.textContent = 'Select files';
+                }).catch(function(err){ console.error(err); showClientMessage('Upload failed', 'danger'); selectBtn.textContent = 'Select files'; });
+            }
+
+            // initialize
+            updateUI('docx2pdf');
+        })();
+    </script>
+}

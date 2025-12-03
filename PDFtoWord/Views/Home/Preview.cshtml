@@ -1,0 +1,110 @@
+@{
+    ViewBag.Title = "Preview";
+}
+
+<link href="~/Content/pdfconvert.css" rel="stylesheet" />
+
+<div class="container mt-5 text-center">
+    <h2>Preview</h2>
+    <p class="text-muted">@ViewBag.FileName</p>
+
+    @if (ViewBag.Extension == ".pdf")
+    {
+        <div style="display:flex;justify-content:center">
+            <iframe src="@Url.Action("Stream", "Home", new { file = ViewBag.FileName })" style="width:70%;height:80vh;border:0;"></iframe>
+        </div>
+    }
+    else
+    {
+        <div class="preview-card d-inline-block">
+            <div class="preview-inner">
+                <div class="preview-thumb" style="width:220px;height:300px;">
+                    <i class="bi bi-file-earmark-word-fill text-primary" style="font-size:80px"></i>
+                </div>
+                <div class="preview-name mt-2 text-truncate">@ViewBag.FileName</div>
+            </div>
+        </div>
+    }
+
+    <div class="mt-4">
+        <a class="btn btn-primary me-2" href="@Url.Action("Download", "Home", new { file = ViewBag.FileName })">Download</a>
+        <a class="btn btn-secondary" href="@Url.Action("Index", "Home")">Back</a>
+    </div>
+</div>
+
+<div class="preview-gallery container mt-4">
+    <h4>Files</h4>
+    <div id="gallery" class="d-flex flex-wrap justify-content-start gap-3"></div>
+</div>
+
+<!-- Floating add button centered vertically -->
+<div class="floating-add fixed-right" id="floatingAdd">
+    <div class="badge-count" id="badgeCount">0</div>
+    <button type="button" class="add-btn" id="addFilesBtn">+</button>
+</div>
+
+<form id="multiUploadForm" style="display:none">
+    <input type="file" id="multiFileInput" name="files" multiple accept="application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,.docx" />
+</form>
+
+@section scripts {
+    <script>
+        (function(){
+            var addBtn = document.getElementById('addFilesBtn');
+            var fileInput = document.getElementById('multiFileInput');
+            var gallery = document.getElementById('gallery');
+            var badge = document.getElementById('badgeCount');
+            var maxFiles = 10;
+            var filesCount = 0;
+
+            function updateBadge(){ badge.textContent = filesCount; }
+
+            addBtn.addEventListener('click', function(){ fileInput.click(); });
+
+            fileInput.addEventListener('change', function(){
+                var files = Array.from(fileInput.files || []);
+                if(!files || files.length ===0) return;
+
+                // limit to max
+                var allowed = files.slice(0, maxFiles - filesCount);
+                allowed.forEach(function(f){ addToGallery(f); ajaxUploadSingle(f); });
+                filesCount += allowed.length; updateBadge();
+                fileInput.value = '';
+            });
+
+            function addToGallery(file){
+                var card = document.createElement('div');
+                card.className = 'preview-card';
+                card.style.width = '140px';
+                card.innerHTML = '<div class="preview-inner"><div class="preview-thumb" style="width:120px;height:160px;display:flex;align-items:center;justify-content:center;background:#fff"><i class="bi bi-file-earmark-pdf-fill text-danger" style="font-size:40px"></i></div><div class="preview-name text-truncate" style="max-width:120px">' + file.name + '</div></div>';
+                gallery.appendChild(card);
+            }
+
+            function ajaxUploadSingle(f){
+                var fd = new FormData();
+                fd.append('file', f, f.name);
+                fd.append('conversion', 'pdf2docx'); // for example - adjust as needed
+                // include anti-forgery token by reading from parent page if present
+                var tokenEl = document.querySelector('input[name="__RequestVerificationToken"]');
+                if(tokenEl) fd.append('__RequestVerificationToken', tokenEl.value);
+
+                fetch('@Url.Action("Upload","Home")', { method:'POST', body:fd, credentials:'same-origin', headers:{ 'X-Requested-With':'XMLHttpRequest' } })
+                    .then(r=>r.json())
+                    .then(json=>{
+                        if(json && json.success){ console.log('uploaded', json.file); }
+                        else console.error('upload failed', json && json.message);
+                    }).catch(e=>console.error(e));
+            }
+
+            // center the floating add vertically
+            function positionFloating(){
+                var h = window.innerHeight;
+                var el = document.getElementById('floatingAdd');
+                if(!el) return; el.style.top = (h/2 - 24) + 'px';
+            }
+            window.addEventListener('resize', positionFloating);
+            positionFloating();
+        })();
+    </script>
+}
+</div>
