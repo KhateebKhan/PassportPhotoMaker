@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.IO;
+
 
 namespace PDFtoWord.Controllers
 {
@@ -17,56 +19,59 @@ namespace PDFtoWord.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Upload(HttpPostedFileBase file, string conversion)
         {
-            if (file == null || file.ContentLength == 0)
+            try
             {
-                TempData["Message"] = "Please select a PDF file to upload.";
-                if (Request.IsAjaxRequest())
-                    return Json(new { success = false, message = "Please select a file to upload." });
-                return RedirectToAction("Index");
-            }
+                if (file == null || file.ContentLength == 0)
+                    return Json(new { success = false, message = "No file selected." });
 
-            string uploads = Server.MapPath("~/App_Data/Uploads");
-            if (!System.IO.Directory.Exists(uploads))
-                System.IO.Directory.CreateDirectory(uploads);
+                string uploads = Server.MapPath("~/App_Data/Uploads");
+                string converted = Server.MapPath("~/App_Data/Converted");
 
-            string originalFileName = System.IO.Path.GetFileName(file.FileName);
-            string srcPath = System.IO.Path.Combine(uploads, originalFileName);
-            file.SaveAs(srcPath);
+                Directory.CreateDirectory(uploads);
+                Directory.CreateDirectory(converted);
 
-            // Decide conversion
-            if (string.Equals(conversion, "pdf2docx", StringComparison.OrdinalIgnoreCase))
-            {
-                // Convert PDF -> DOCX
-                // Placeholder: no conversion library included. Return uploaded PDF for now.
-                // To implement: use a library (e.g., Syncfusion, Aspose, Spire.PDF) or call LibreOffice headless.
-                TempData["Message"] = "Uploaded PDF saved. Conversion to DOCX is not yet implemented.";
-                if (Request.IsAjaxRequest())
-                    return Json(new { success = true, message = TempData["Message"], file = originalFileName });
-                return RedirectToAction("Index");
-            }
-            else if (string.Equals(conversion, "docx2pdf", StringComparison.OrdinalIgnoreCase))
-            {
-                // Convert DOCX -> PDF
-                // Validate input
-                if (!originalFileName.EndsWith(".docx", StringComparison.OrdinalIgnoreCase))
+                string originalName = Path.GetFileName(file.FileName);
+                string srcPath = Path.Combine(uploads, Guid.NewGuid() + "_" + originalName);
+                file.SaveAs(srcPath);
+
+                string outputFile = "";
+
+                // =======================
+                // PDF → DOCX
+                // =======================
+                if (conversion == "pdf2docx")
                 {
-                    TempData["Message"] = "Please upload a .docx file for Word → PDF conversion.";
-                    if (Request.IsAjaxRequest())
-                        return Json(new { success = false, message = TempData["Message"] });
-                    return RedirectToAction("Index");
+                    if (!originalName.ToLower().EndsWith(".pdf"))
+                        return Json(new { success = false, message = "Upload a PDF file." });
+
+                    outputFile = PDFtoWord.Helper.ConverterService.PdfToDocx(srcPath, converted);
+                }
+                // =======================
+                // DOCX → PDF
+                // =======================
+                else if (conversion == "docx2pdf")
+                {
+                    if (!originalName.ToLower().EndsWith(".docx"))
+                        return Json(new { success = false, message = "Upload a DOCX file." });
+
+                    outputFile = PDFtoWord.Helper.ConverterService.DocxToPdf(srcPath, converted);
+                }
+                else
+                {
+                    return Json(new { success = false, message = "Invalid conversion type." });
                 }
 
-                // Placeholder: not implemented
-                TempData["Message"] = "Uploaded DOCX saved. Conversion to PDF is not yet implemented.";
-                if (Request.IsAjaxRequest())
-                    return Json(new { success = true, message = TempData["Message"], file = originalFileName });
-                return RedirectToAction("Index");
+                return Json(new
+                {
+                    success = true,
+                    message = "Conversion completed!",
+                    file = Path.GetFileName(outputFile)
+                });
             }
-
-            TempData["Message"] = "File uploaded successfully: " + originalFileName;
-            if (Request.IsAjaxRequest())
-                return Json(new { success = true, message = TempData["Message"], file = originalFileName });
-            return RedirectToAction("Index");
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
         }
 
         public ActionResult About()
@@ -87,14 +92,22 @@ namespace PDFtoWord.Controllers
                 return HttpNotFound();
 
             string uploads = Server.MapPath("~/App_Data/Uploads");
-            string filePath = System.IO.Path.Combine(uploads, file);
+            string converted = Server.MapPath("~/App_Data/Converted");
+
+            string filePath = Path.Combine(uploads, file);
+
+            if (!System.IO.File.Exists(filePath))
+                filePath = Path.Combine(converted, file);
+
             if (!System.IO.File.Exists(filePath))
                 return HttpNotFound();
 
             ViewBag.FileName = file;
-            ViewBag.FileUrl = Url.Content("~/App_Data/Uploads/" + file);
+            ViewBag.FileUrl = Url.Content("~/App_Data/Converted/" + file);
             ViewBag.Extension = System.IO.Path.GetExtension(file).ToLowerInvariant();
+
             return View();
+
         }
 
         // Download the uploaded file
@@ -103,17 +116,29 @@ namespace PDFtoWord.Controllers
             if (string.IsNullOrEmpty(file))
                 return RedirectToAction("Index");
 
-            if (System.IO.Path.GetFileName(file) != file)
+            // Prevent path injection
+            if (Path.GetFileName(file) != file)
                 return HttpNotFound();
 
             string uploads = Server.MapPath("~/App_Data/Uploads");
-            string filePath = System.IO.Path.Combine(uploads, file);
+            string converted = Server.MapPath("~/App_Data/Converted");
+
+            // First check Converted folder (converted output files)
+            string filePath = Path.Combine(converted, file);
+
+            if (!System.IO.File.Exists(filePath))
+            {
+                // If not found, check Uploads folder
+                filePath = Path.Combine(uploads, file);
+            }
+
             if (!System.IO.File.Exists(filePath))
                 return HttpNotFound();
 
             string contentType = System.Web.MimeMapping.GetMimeMapping(filePath);
             return File(filePath, contentType, file);
         }
+
 
         // Stream file for inline preview (no attachment header)
         public ActionResult Stream(string file)
@@ -125,12 +150,19 @@ namespace PDFtoWord.Controllers
                 return HttpNotFound();
 
             string uploads = Server.MapPath("~/App_Data/Uploads");
-            string filePath = System.IO.Path.Combine(uploads, file);
+            string converted = Server.MapPath("~/App_Data/Converted");
+
+            string filePath = Path.Combine(uploads, file);
+
+            if (!System.IO.File.Exists(filePath))
+                filePath = Path.Combine(converted, file);
+
             if (!System.IO.File.Exists(filePath))
                 return HttpNotFound();
 
             string contentType = System.Web.MimeMapping.GetMimeMapping(filePath);
             return File(filePath, contentType);
+
         }
 
         public ActionResult Contact()
